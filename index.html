@@ -12,9 +12,18 @@
     <div class="nav-bar"></div>
 
     <div id="app">
+      <!-- Moving Cart to make it global for all Products: -->
+      <div class="cart">
+        <!-- to get the number of items in cart we use .length we don't get the id numbers-->
+        <p>Cart ({{ cart.length }})</p>
+      </div>
       <!-- adding the component -->
       <!-- pass the prop in the component -->
-      <product :premium="premium"></product>
+      <product
+        :premium="premium"
+        @add-to-cart="incCart"
+        @remove-from-cart="decCart"
+      ></product>
     </div>
 
     <!-- Adding VueJs -->

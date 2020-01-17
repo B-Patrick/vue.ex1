@@ -69,10 +69,9 @@ Vue.component("product", {
       <!-- Adding Cart / and Event handling v-on / time to use methods to increment the Cart -->
       <!-- Class Binding -->
       <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}"> Add to Cart</button>
-      <button v-on:click="removeFromCart" :disabled=" cart == 0" :class="{ disabledButton: cart == 0 }">Remove Item</button>
-      <div class="cart">
-          <p> Cart ({{ cart }}) </p>
-      </div>
+      
+      <button v-on:click="removeFromCart" :disabled="!inStock" :class="{disabledButton: !inStock}">Remove Item</button>
+      
       
       </div>
     </div>
@@ -105,17 +104,21 @@ Vue.component("product", {
           variantQuantity: 0
         }
       ],
-      sizes: [40, 42, 43, 45, 46],
-      cart: 0
+      sizes: [40, 42, 43, 45, 46]
     };
   },
   methods: {
     // increment the cart
-    addToCart: function() {
-      this.cart += 1;
+    addToCart() {
+      // here we will use $emit to make the parent component listen to the event
+      // we add the id by targetting the selected variant as a second parameter
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].variantId);
     },
-    removeFromCart: function() {
-      this.cart -= 1;
+    removeFromCart() {
+      this.$emit(
+        "remove-from-cart",
+        this.variants[this.selectedVariant].variantId
+      );
     },
     // updating product after refactoring
     updateProduct: function(index) {
@@ -153,6 +156,16 @@ let app = new Vue({
   el: "#app",
   data: {
     // check if the user is premium and pass it as prop
-    premium: true
+    premium: true,
+    cart: []
+  },
+  methods: {
+    incCart(id) {
+      // to know what was added to the cart, make cart an array and pass the id to incCart
+      this.cart.push(id);
+    },
+    decCart(id) {
+      this.cart.pop(id);
+    }
   }
 });
