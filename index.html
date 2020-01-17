@@ -18,14 +18,17 @@
           <img v-bind:src="image" alt="socks" />
         </div>
         <div class="product-info">
-          <h1>{{ product }}</h1>
+            <!-- Using Computed -->
+          <h1>{{ title }}</h1>
 
           <!-- Conditional rendering using v-if -->
-          <p v-if="inStock">In Stock</p>
+          <p v-if="inStock">In Stock
+            <span v-if="onSale && inStock"> {{ sale }}</span>
+          </p>
 
-          <!-- Binding out of stock to a class -->
+          <!-- Binding outofstock to a class -->
           <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
-          <p v-if="onSale && inStock">On Sale!</p>
+          
 
           <!-- List Rendering using v-for/ showing product details -->
           <ul>
@@ -41,11 +44,13 @@
 
             <!-- using v-on OR @ as shorthand to activate hover function on colors-->
             <!-- Class and Style binding -->
-          <div v-for=" variant in variants" 
+
+            <!-- refactoring code -->
+          <div v-for=" (variant, index) in variants" 
             :key="variant.variantId"
             class="color-box"
             :style="{ backgroundColor: variant.variantColor }"
-            @mouseover="updateProduct(variant.variantImage)"> 
+            @mouseover="updateProduct(index)"> 
           </div>
 
           <!-- Adding Cart / and Event handling v-on / time to use methods to increment the Cart -->
