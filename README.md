@@ -1,4 +1,4 @@
-# vue.ex1
+# Vue.exercise1
 
 ## Simple Vuejs Product Page
 
