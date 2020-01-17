@@ -22,7 +22,9 @@
 
           <!-- Conditional rendering using v-if -->
           <p v-if="inStock">In Stock</p>
-          <p v-else>Out of Stock</p>
+
+          <!-- Binding out of stock to a class -->
+          <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
           <p v-if="onSale && inStock">On Sale!</p>
 
           <!-- List Rendering using v-for/ showing product details -->
@@ -38,12 +40,17 @@
 
 
             <!-- using v-on OR @ as shorthand to activate hover function on colors-->
-          <div v-for=" variant in variants" :key="variant.variantId">
-            <p @mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p>
+            <!-- Class and Style binding -->
+          <div v-for=" variant in variants" 
+            :key="variant.variantId"
+            class="color-box"
+            :style="{ backgroundColor: variant.variantColor }"
+            @mouseover="updateProduct(variant.variantImage)"> 
           </div>
 
           <!-- Adding Cart / and Event handling v-on / time to use methods to increment the Cart -->
-          <button v-on:click="addToCart">Add to Cart</button>
+          <!-- Class Binding -->
+          <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}"> Add to Cart</button>
           <button v-on:click="removeFromCart" :disabled=" cart == 0" :class="{ disabledButton: cart == 0 }">Remove Item</button>
           <div class="cart">
               <p> Cart ({{ cart }}) </p>
