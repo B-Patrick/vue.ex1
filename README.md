@@ -1,2 +1,5 @@
 # vue.ex1
-simple vuejs store
+
+## Simple Vuejs Product Page
+
+- It shows how Vuejs concepts work
